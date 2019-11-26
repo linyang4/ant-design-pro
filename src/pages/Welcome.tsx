@@ -1,13 +1,70 @@
 import React from 'react';
 import { FormattedMessage } from 'umi-plugin-react/locale';
-import { Card, Typography, Alert, Button, Divider, Row, Col, Layout, Menu, Breadcrumb } from 'antd';
-import { Desktop, PieChart, File, Team, User } from '@ant-design/icons';
+import {
+  Card,
+  Steps,
+  Typography,
+  Alert,
+  Button,
+  Table,
+  Divider,
+  Row,
+  Col,
+  Layout,
+  Menu,
+  Tag,
+  Breadcrumb,
+  Dropdown,
+  PageHeader,
+} from 'antd';
+import {
+  Solution,
+  Loading,
+  Desktop,
+  PieChart,
+  File,
+  Team,
+  User,
+  Down,
+  Ellipsis,
+  StepForward,
+  Smile,
+} from '@ant-design/icons';
 
 import '@/dark.less';
 
 const { Title, Paragraph, Text } = Typography;
+const { Step } = Steps;
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+const { Column, ColumnGroup } = Table;
+
+const data = [
+  {
+    key: '1',
+    firstName: 'John',
+    lastName: 'Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer'],
+  },
+  {
+    key: '2',
+    firstName: 'Jim',
+    lastName: 'Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser'],
+  },
+  {
+    key: '3',
+    firstName: 'Joe',
+    lastName: 'Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+    tags: ['cool', 'teacher'],
+  },
+];
 
 const CodePreview: React.FC<{}> = ({ children }) => (
   <pre>
@@ -15,6 +72,122 @@ const CodePreview: React.FC<{}> = ({ children }) => (
       <Typography.Text copyable>{children}</Typography.Text>
     </code>
   </pre>
+);
+
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        1st menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+        2nd menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+        3rd menu item
+      </a>
+    </Menu.Item>
+  </Menu>
+);
+
+const DropdownMenu = () => (
+  <Dropdown key="more" overlay={menu}>
+    <Button
+      style={{
+        border: 'none',
+        padding: 0,
+      }}
+    >
+      <Ellipsis
+        style={{
+          fontSize: 20,
+          verticalAlign: 'top',
+        }}
+      />
+    </Button>
+  </Dropdown>
+);
+
+const routes = [
+  {
+    path: 'index',
+    breadcrumbName: 'First-level Menu',
+  },
+  {
+    path: 'first',
+    breadcrumbName: 'Second-level Menu',
+  },
+  {
+    path: 'second',
+    breadcrumbName: 'Third-level Menu',
+  },
+];
+
+const IconLink = ({ src, text }) => (
+  <a
+    style={{
+      marginRight: 16,
+      display: 'flex',
+      alignItems: 'center',
+    }}
+  >
+    <img
+      style={{
+        marginRight: 8,
+      }}
+      src={src}
+      alt="start"
+    />
+    {text}
+  </a>
+);
+
+const content = (
+  <div className="content">
+    <Paragraph>
+      Ant Design interprets the color system into two levels: a system-level color system and a
+      product-level color system.
+    </Paragraph>
+    <Paragraph>
+      Ant Design&#x27;s design team preferred to design with the HSB color model, which makes it
+      easier for designers to have a clear psychological expectation of color when adjusting colors,
+      as well as facilitate communication in teams.
+    </Paragraph>
+    <Row className="contentLink">
+      <IconLink
+        src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+        text="Quick Start"
+      />
+      <IconLink
+        src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg"
+        text=" Product Info"
+      />
+      <IconLink
+        src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+        text="Product Doc"
+      />
+    </Row>
+  </div>
+);
+
+const Content2 = ({ children, extraContent }) => (
+  <Row className="content">
+    <div className="main" style={{ flex: 1 }}>
+      {children}
+    </div>
+    <div
+      className="extra"
+      style={{
+        marginLeft: 80,
+      }}
+    >
+      {extraContent}
+    </div>
+  </Row>
 );
 
 export default () => {
@@ -73,6 +246,125 @@ export default () => {
             <Breadcrumb.Item>User</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
+          <StepForward />
+          <Steps current={1}>
+            <Step title="Finished" description="This is a description." />
+            <Step
+              title="In Progress"
+              subTitle="Left 00:00:08"
+              description="This is a description."
+            />
+            <Step title="Waiting" description="This is a description." />
+          </Steps>
+          <Steps progressDot current={1}>
+            <Step title="Finished" description="This is a description." />
+            <Step title="In Progress" description="This is a description." />
+            <Step title="Waiting" description="This is a description." />
+          </Steps>
+          <Alert message="Success Tips" type="success" showIcon />
+          <Alert message="Informational Notes" type="info" showIcon />
+          <Alert message="Warning" type="warning" showIcon />
+          <Alert message="Error" type="error" showIcon />
+          <Alert
+            message="Success Tips"
+            description="Detailed description and advice about successful copywriting."
+            type="success"
+            showIcon
+          />
+          <Alert
+            message="Informational Notes"
+            description="Additional description and information about copywriting."
+            type="info"
+            showIcon
+          />
+          <Alert
+            message="Warning"
+            description="This is a warning notice about copywriting."
+            type="warning"
+            showIcon
+          />
+          <Alert
+            message="Error"
+            description="This is an error message about copywriting."
+            type="error"
+            showIcon
+          />
+          <Steps type="navigation" currrent={1}>
+            <Step status="finish" title="Step 1" />
+            <Step status="process" title="Step 2" />
+            <Step status="wait" title="Step 3" />
+            <Step status="wait" title="Step 4" />
+          </Steps>
+          <Steps current={1} status="error">
+            <Step title="Finished" description="This is a description" />
+            <Step title="In Process" description="This is a description" />
+            <Step title="Waiting" description="This is a description" />
+          </Steps>
+          <Steps>
+            <Step status="finish" title="Login" icon={<User />} />
+            <Step status="finish" title="Verification" icon={<Solution />} />
+            <Step status="process" title="Pay" icon={<Loading />} />
+            <Step status="wait" title="Done" icon={<Smile />} />
+          </Steps>
+          <Table dataSource={data}>
+            <ColumnGroup title="Name">
+              <Column title="First Name" dataIndex="firstName" key="firstName" />
+              <Column title="Last Name" dataIndex="lastName" key="lastName" />
+            </ColumnGroup>
+            <Column title="Age" dataIndex="age" key="age" />
+            <Column title="Address" dataIndex="address" key="address" />
+            <Column
+              title="Tags"
+              dataIndex="tags"
+              key="tags"
+              render={tags => (
+                <span>
+                  {tags.map(tag => (
+                    <Tag color="blue" key={tag}>
+                      {tag}
+                    </Tag>
+                  ))}
+                </span>
+              )}
+            />
+            <Column
+              title="Action"
+              key="action"
+              render={(text, record) => (
+                <span>
+                  <a>Invite {record.lastName}</a>
+                  <Divider type="vertical" />
+                  <a>Delete</a>
+                </span>
+              )}
+            />
+          </Table>
+          <PageHeader
+            title="Title"
+            subTitle="This is a subtitle"
+            tags={<Tag color="blue">Running</Tag>}
+            extra={[
+              <Button key="3">Operation</Button>,
+              <Button key="2">Operation</Button>,
+              <Button key="1" type="primary">
+                Primary
+              </Button>,
+              <DropdownMenu key="more" />,
+            ]}
+            avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
+            breadcrumb={{ routes }}
+          >
+            <Content2
+              extraContent={
+                <img
+                  src="https://gw.alipayobjects.com/mdn/mpaas_user/afts/img/A*KsfVQbuLRlYAAAAAAAAAAABjAQAAAQ/original"
+                  alt="content"
+                />
+              }
+            >
+              {content}
+            </Content2>
+          </PageHeader>
           <div>Bill is a cat.</div>
           <Card>
             <Alert
@@ -115,11 +407,33 @@ export default () => {
             </a>
             。
           </p>
+          <p className="testtesttest">test</p>
           <Button type="primary">Primary</Button>
           <Button>Default</Button>
           <Button type="dashed">Dashed</Button>
           <Button type="danger">Danger</Button>
           <Button type="link">Link</Button>
+          <Button type="primary">Primary</Button>
+          <Button type="primary" disabled>
+            Primary(disabled)
+          </Button>
+          <br />
+          <Button>Default</Button>
+          <Button disabled>Default(disabled)</Button>
+          <Button type="primary" ghost>
+            Primary
+          </Button>
+          <Button ghost>Default</Button>
+          <Button type="dashed" ghost>
+            Dashed
+          </Button>
+          <Button type="danger" ghost>
+            danger
+          </Button>
+          <Button type="link" ghost>
+            link
+          </Button>
+          <br />
           <Typography>
             <Title>Introduction</Title>
             <Paragraph>
@@ -207,6 +521,11 @@ export default () => {
             <Col span={6}>col-6</Col>
           </Row>
         </Content>
+        <Dropdown overlay={menu}>
+          <a className="ant-dropdown-link" href="#">
+            Hover me <Down />
+          </a>
+        </Dropdown>
         <Footer>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
     </Layout>

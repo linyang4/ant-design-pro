@@ -1,24 +1,66 @@
 @import '~antd/dist/antd.less';
 
 // antd
+@blue-1: #111d2c;
+@blue-2: #102944;
+@blue-3: #14385a;
+@blue-4: #154b7d;
+@blue-5: #1664ac;
 @blue-6: #167cdb;
+@blue-7: #3892db;
+@blue-8: #65b7f3;
+@blue-9: #8bcbf3;
+@blue-10: #b2dcf3;
+
 @purple-6: #6329b4;
 @cyan-6: #12a7a7;
+
+@green-1: #172811;
+@green-2: #1c3611;
+@green-3: #264815;
+@green-4: #2f6216;
+@green-5: #3b8517;
 @green-6: #48a918;
+@green-7: #64b436;
+@green-8: #8fd460;
+@green-9: #afe089;
+@green-10: #cfecb6;
+
 @magenta-6: #ca2a82;
 @pink-6: #ca2a82;
+
+@red-1: #321115;
+@red-2: #421317;
+@red-3: #57171b;
+@red-4: #78191e;
+@red-5: #a51c23;
 @red-6: #d21f28;
+@red-7: #db4345;
+@red-8: #f37370;
+@red-9: #f39c97;
+@red-10: #f3c3be;
+
 @orange-6: #d77915;
 @yellow-6: #d7bc13;
 @volcano-6: #d7491a;
 @geekblue-6: #2a49ca;
 @lime-6: #8aba10;
+
+@gold-1: #332510;
+@gold-3: #583714;
 @gold-6: #d79513;
+
 @white: #fff;
 @black: #000;
 
 // -------- colors ----------
-
+@primary-color: @blue-6;
+@info-color: @blue-6;
+@success-color: @green-6;
+@processing-color: @blue-6;
+@error-color: @red-5;
+@highlight-color: @red-5;
+@warning-color: @gold-6;
 @gray-11: #1f1f1f;
 @gray-12: #141414;
 
@@ -38,7 +80,7 @@
 // The background colors for active and hover states for things like
 // list items or table cells.
 @item-active-bg: @primary-1;
-@item-hover-bg: #f5f5f5;
+@item-hover-bg: fade(@white, 8%);
 
 // ICONFONT
 @iconfont-css-prefix: anticon;
@@ -51,8 +93,8 @@
 @link-hover-decoration: none;
 
 // Border color
-@border-color-base: hsv(0, 0, 85%); // base border outline a component
-@border-color-split: hsv(0, 0, 94%); // split border inside a component
+@border-color-base: fade(@white, 20%); // base border outline a component
+@border-color-split: @border-color-base; // split border inside a component
 @border-color-inverse: @white;
 @border-style-base: solid; // style of a components border
 
@@ -94,12 +136,16 @@
 @btn-default-border: @border-color-base;
 
 @btn-danger-color: #fff;
-@btn-danger-bg: color(~`colorPalette('@{error-color}', 5) `);
-@btn-danger-border: color(~`colorPalette('@{error-color}', 5) `);
+@btn-danger-bg: @red-7;
+@btn-danger-border: @red-7;
 
 @btn-disable-color: @disabled-color;
 @btn-disable-bg: @disabled-bg;
 @btn-disable-border: @border-color-base;
+
+@btn-default-ghost-color: @text-color;
+@btn-default-ghost-bg: transparent;
+@btn-default-ghost-border: fade(@white, 25%);
 
 @btn-group-border: @primary-5;
 
@@ -384,17 +430,17 @@
 
 // Alert
 // ---
-@alert-success-border-color: ~`colorPalette('@{success-color}', 3) `;
-@alert-success-bg-color: ~`colorPalette('@{success-color}', 1) `;
+@alert-success-border-color: @green-3;
+@alert-success-bg-color: @green-1;
 @alert-success-icon-color: @success-color;
-@alert-info-border-color: ~`colorPalette('@{info-color}', 3) `;
-@alert-info-bg-color: ~`colorPalette('@{info-color}', 1) `;
+@alert-info-border-color: @blue-3;
+@alert-info-bg-color: @blue-1;
 @alert-info-icon-color: @info-color;
-@alert-warning-border-color: ~`colorPalette('@{warning-color}', 3) `;
-@alert-warning-bg-color: ~`colorPalette('@{warning-color}', 1) `;
+@alert-warning-border-color: @gold-3;
+@alert-warning-bg-color: @gold-1;
 @alert-warning-icon-color: @warning-color;
-@alert-error-border-color: ~`colorPalette('@{error-color}', 3) `;
-@alert-error-bg-color: ~`colorPalette('@{error-color}', 1) `;
+@alert-error-border-color: @red-3;
+@alert-error-bg-color: @red-1;
 @alert-error-icon-color: @error-color;
 
 // List
