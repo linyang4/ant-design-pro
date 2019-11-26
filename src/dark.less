@@ -11,23 +11,35 @@
 // @blue-8: #65b7f3;
 // @blue-9: #8bcbf3;
 // @blue-10: #b2dcf3;
-
-@white: #fff;
-@black: #000;
-
 // -------- colors ----------
+
+// Color used by default to control hover and active backgrounds and for
+// alert info backgrounds.
+@primary-1: @blue-1; // replace tint(@primary-color, 90%)
+@primary-2: @blue-2; // replace tint(@primary-color, 80%)
+@primary-3: @blue-3; // unused
+@primary-4: @blue-4; // unused
+@primary-5: @blue-5; // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+@primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
+@primary-7: @blue-7; // replace shade(@primary-color, 5%)
+@primary-8: @blue-8; // unused
+@primary-9: @blue-9; // unused
+@primary-10: @blue-10; // unused
+
 @primary-color: @blue-6;
 @info-color: @blue-6;
 @success-color: @green-6;
 @processing-color: @blue-6;
-@error-color: @red-5;
+@error-color: @red-6;
 @highlight-color: @red-5;
 @warning-color: @gold-6;
+@white: #fff;
+@black: #000;
 @gray-11: #1f1f1f;
 @gray-12: #141414;
-
 @body-background: @black;
-@component-background: @gray-12;
+@component-background: @gray-11;
+
 @font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica,
   'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;
 @text-color: fade(@white, 65%);
@@ -56,7 +68,7 @@
 
 // Border color
 @border-color-base: fade(@white, 20%); // base border outline a component
-@border-color-split: @border-color-base; // split border inside a component
+@border-color-split: fade(@white, 12%); // split border inside a component
 @border-color-inverse: @white;
 @border-style-base: solid; // style of a components border
 
@@ -94,7 +106,7 @@
 @btn-primary-bg: @primary-color;
 
 @btn-default-color: @text-color;
-@btn-default-bg: @component-background;
+@btn-default-bg: transparent;
 @btn-default-border: @border-color-base;
 
 @btn-danger-color: #fff;
@@ -214,8 +226,8 @@
 
 // Modal
 // --
-@modal-header-bg: @gray-11;
-@modal-content-bg: @gray-11;
+// @modal-header-bg: @gray-11;
+// @modal-content-bg: @gray-11;
 @modal-heading-color: @heading-color;
 @modal-footer-bg: transparent;
 @modal-footer-border-color-split: @border-color-split;
@@ -273,8 +285,9 @@
 // ---
 @time-picker-selected-bg: @item-active-bg;
 
-// Carousel
+// Calendar
 // ---
+@calendar-border-color: transparent;
 
 // Badge
 // ---
@@ -386,6 +399,7 @@
 
 // Message
 // ---
+// @message-notice-content-bg: @gray-11;
 
 // Motion
 // ---
@@ -419,7 +433,7 @@
 
 // Drawer
 // ---
-@drawer-bg: @gray-11;
+// @drawer-bg: @gray-11;
 
 // Timeline
 // ---

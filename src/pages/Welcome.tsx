@@ -3,7 +3,19 @@ import { FormattedMessage } from 'umi-plugin-react/locale';
 import {
   Card,
   Steps,
+  Drawer,
+  Popconfirm,
+  Progress,
+  DatePicker,
+  notification,
+  message,
+  Modal,
+  Radio,
   Typography,
+  Form,
+  Select,
+  Input,
+  DatePicker,
   Alert,
   Button,
   Table,
@@ -20,6 +32,7 @@ import {
 import {
   Solution,
   Loading,
+  Plus,
   Desktop,
   PieChart,
   File,
@@ -34,6 +47,8 @@ import {
 import '@/dark.less';
 
 const { Title, Paragraph, Text } = Typography;
+const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+const { Option } = Select;
 const { Step } = Steps;
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -192,10 +207,65 @@ const Content2 = ({ children, extraContent }) => (
 
 export default () => {
   const [collapsed, setCollapsed] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
+  const [size, setSize] = React.useState('default');
+  const [visibleModal, setDrawerVisible] = React.useState(false);
 
   const onCollapse = collapsed => {
     setCollapsed(collapsed);
   };
+  const showDrawer = () => {
+    setVisible(true);
+  };
+  const onClose = () => {
+    setVisible(false);
+  };
+  const showModal = () => {
+    setDrawerVisible(true);
+  };
+  const handleOk = () => {
+    setDrawerVisible(false);
+  };
+  const handleCancel = () => {
+    setDrawerVisible(false);
+  };
+  const info = () => {
+    message.info('This is a normal message');
+  };
+  const success = () => {
+    message.success('This is a success message');
+  };
+
+  const error = () => {
+    message.error('This is an error message');
+  };
+
+  const warning = () => {
+    message.warning('This is a warning message');
+  };
+
+  const confirm = e => {
+    console.log(e);
+    message.success('Click on Yes');
+  };
+
+  const cancel = e => {
+    console.log(e);
+    message.error('Click on No');
+  };
+
+  const openNotificationWithIcon = type => {
+    notification[type]({
+      message: 'Notification Title',
+      description:
+        'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    });
+  };
+
+  const handleSizeChange = e => {
+    setSize(e.target.value);
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
@@ -247,6 +317,177 @@ export default () => {
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
           <StepForward />
+          <Button type="primary" onClick={showDrawer}>
+            <Plus /> New account
+          </Button>
+          <div>
+            <Radio.Group value={size} onChange={handleSizeChange}>
+              <Radio.Button value="large">Large</Radio.Button>
+              <Radio.Button value="default">Default</Radio.Button>
+              <Radio.Button value="small">Small</Radio.Button>
+            </Radio.Group>
+            <br />
+            <br />
+            <DatePicker size={size} />
+            <br />
+            <MonthPicker size={size} placeholder="Select Month" />
+            <br />
+            <RangePicker size={size} />
+            <br />
+            <WeekPicker size={size} placeholder="Select Week" />
+          </div>
+          <div>
+            <Button type="primary" onClick={showModal}>
+              Open Modal
+            </Button>
+            <Modal
+              title="Basic Modal"
+              visible={visibleModal}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </Modal>
+          </div>
+          <Popconfirm
+            title="Are you sure delete this task?"
+            onConfirm={confirm}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <a href="#">Delete</a>
+          </Popconfirm>
+          <Button onClick={() => openNotificationWithIcon('success')}>Success</Button>
+          <Button onClick={() => openNotificationWithIcon('info')}>Info</Button>
+          <Button onClick={() => openNotificationWithIcon('warning')}>Warning</Button>
+          <Button onClick={() => openNotificationWithIcon('error')}>Error</Button>
+          <Button onClick={success}>Success</Button>
+          <Button onClick={error}>Error</Button>
+          <Button onClick={warning}>Warning</Button>
+          <Button onClick={info}>Info</Button>
+          <Drawer
+            title="Create a new account"
+            width={720}
+            onClose={onClose}
+            visible={visible}
+            bodyStyle={{ paddingBottom: 80 }}
+          >
+            <Form layout="vertical" hideRequiredMark>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    name="name"
+                    label="Name"
+                    rules={[{ required: true, message: 'Please enter user name' }]}
+                  >
+                    <Input placeholder="Please enter user name" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    name="url"
+                    label="Url"
+                    rules={[{ required: true, message: 'Please enter url' }]}
+                  >
+                    <Input
+                      style={{ width: '100%' }}
+                      addonBefore="http://"
+                      addonAfter=".com"
+                      placeholder="Please enter url"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    name="owner"
+                    label="Owner"
+                    rules={[{ required: true, message: 'Please select an owner' }]}
+                  >
+                    <Select placeholder="Please select an owner">
+                      <Option value="xiao">Xiaoxiao Fu</Option>
+                      <Option value="mao">Maomao Zhou</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    name="type"
+                    label="Type"
+                    rules={[{ required: true, message: 'Please choose the type' }]}
+                  >
+                    <Select placeholder="Please choose the type">
+                      <Option value="private">Private</Option>
+                      <Option value="public">Public</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    name="approver"
+                    label="Approver"
+                    rules={[{ required: true, message: 'Please choose the approver' }]}
+                  >
+                    <Select placeholder="Please choose the approver">
+                      <Option value="jack">Jack Ma</Option>
+                      <Option value="tom">Tom Liu</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    name="dateTime"
+                    label="DateTime"
+                    rules={[{ required: true, message: 'Please choose the dateTime' }]}
+                  >
+                    <DatePicker.RangePicker
+                      style={{ width: '100%' }}
+                      getPopupContainer={trigger => trigger.parentNode}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={24}>
+                  <Form.Item
+                    name="description"
+                    label="Description"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'please enter url description',
+                      },
+                    ]}
+                  >
+                    <Input.TextArea rows={4} placeholder="please enter url description" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+            <div
+              style={{
+                position: 'absolute',
+                right: 0,
+                bottom: 0,
+                width: '100%',
+                padding: '10px 16px',
+                textAlign: 'right',
+              }}
+            >
+              <Button onClick={onClose} style={{ marginRight: 8 }}>
+                Cancel
+              </Button>
+              <Button onClick={onClose} type="primary">
+                Submit
+              </Button>
+            </div>
+          </Drawer>
           <Steps current={1}>
             <Step title="Finished" description="This is a description." />
             <Step
@@ -261,6 +502,14 @@ export default () => {
             <Step title="In Progress" description="This is a description." />
             <Step title="Waiting" description="This is a description." />
           </Steps>
+          <Progress type="circle" percent={75} />
+          <Progress type="circle" percent={70} status="exception" />
+          <Progress type="circle" percent={100} />
+          <Progress percent={30} />
+          <Progress percent={50} status="active" />
+          <Progress percent={70} status="exception" />
+          <Progress percent={100} />
+          <Progress percent={50} showInfo={false} />
           <Alert message="Success Tips" type="success" showIcon />
           <Alert message="Informational Notes" type="info" showIcon />
           <Alert message="Warning" type="warning" showIcon />
