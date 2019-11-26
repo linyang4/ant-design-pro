@@ -35,6 +35,7 @@
 @warning-color: @gold-6;
 @white: #fff;
 @black: #000;
+@gray-9: #434343;
 @gray-11: #1f1f1f;
 @gray-12: #141414;
 @body-background: @black;
@@ -44,7 +45,7 @@
   'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;
 @text-color: fade(@white, 65%);
 @text-color-secondary: fade(@white, 45);
-@text-color-inverse: @black;
+@text-color-inverse: @white;
 @heading-color: fade(@white, 85%);
 @heading-color-dark: fade(@white, 100%);
 @text-color-dark: fade(@white, 85%);
@@ -125,7 +126,8 @@
 
 // Checkbox
 @checkbox-color: @primary-color;
-@checkbox-check-color: #fff;
+@checkbox-check-bg: transparent;
+@checkbox-check-color: @white;
 @checkbox-border-width: @border-width-base;
 
 // Descriptions
@@ -208,7 +210,7 @@
 // Tooltip text color
 @tooltip-color: #fff;
 // Tooltip background color
-@tooltip-bg: rgba(0, 0, 0, 0.75);
+@tooltip-bg: @gray-9;
 // Tooltip arrow color
 @tooltip-arrow-color: @tooltip-bg;
 
@@ -288,6 +290,7 @@
 // Calendar
 // ---
 @calendar-border-color: transparent;
+@calendar-item-active-bg: @background-color-base;
 
 // Badge
 // ---
@@ -342,6 +345,7 @@
 @switch-disabled-opacity: 0.4;
 @switch-color: @primary-color;
 @switch-shadow-color: fade(#00230b, 20%);
+@switch-bg: @white;
 
 // Pagination
 // ---
@@ -361,21 +365,15 @@
 
 // Slider
 // ---
-@slider-rail-background-color: @background-color-base;
-@slider-rail-background-color-hover: #e1e1e1;
-@slider-track-background-color: @primary-3;
-@slider-track-background-color-hover: @primary-4;
-@slider-handle-background-color: @component-background;
-@slider-handle-color: @primary-3;
-@slider-handle-color-hover: @primary-4;
+@slider-rail-background-color: @border-color-base;
+@slider-rail-background-color-hover: @border-color-base;
+@slider-track-background-color: @primary-color;
+@slider-track-background-color-hover: @primary-color;
+@slider-handle-color: @primary-color;
+@slider-handle-color-hover: @primary-color;
 @slider-handle-color-focus: tint(@primary-color, 20%);
 @slider-handle-color-focus-shadow: fade(@primary-color, 20%);
-@slider-handle-color-tooltip-open: @primary-color;
-@slider-handle-shadow: 0;
-@slider-dot-border-color: @border-color-split;
 @slider-dot-border-color-active: tint(@primary-color, 50%);
-@slider-disabled-color: @disabled-color;
-@slider-disabled-background-color: @component-background;
 
 // Tree
 // ---

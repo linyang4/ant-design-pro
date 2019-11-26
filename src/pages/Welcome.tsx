@@ -3,9 +3,14 @@ import { FormattedMessage } from 'umi-plugin-react/locale';
 import {
   Card,
   Steps,
+  TreeSelect,
+  TimePicker,
   Drawer,
   Popconfirm,
+  Rate,
   Progress,
+  Upload,
+  Transfer,
   DatePicker,
   notification,
   message,
@@ -13,7 +18,9 @@ import {
   Radio,
   Typography,
   Form,
+  Switch,
   Select,
+  Slider,
   Input,
   DatePicker,
   Alert,
@@ -40,6 +47,9 @@ import {
   User,
   Down,
   Ellipsis,
+  Check,
+  Close,
+  Upload as IconUpload,
   StepForward,
   Smile,
 } from '@ant-design/icons';
@@ -53,6 +63,7 @@ const { Step } = Steps;
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 const { Column, ColumnGroup } = Table;
+const { TreeNode } = TreeSelect;
 
 const data = [
   {
@@ -210,6 +221,49 @@ export default () => {
   const [visible, setVisible] = React.useState(false);
   const [size, setSize] = React.useState('default');
   const [visibleModal, setDrawerVisible] = React.useState(false);
+  const [disabled, setDisabled] = React.useState(false);
+  const [treeSelectValue, setTreeSelectValue] = React.useState(undefined);
+  const [targetKeys, setTargetKeys] = React.useState([]);
+  const [mockData, setMockData] = React.useState([]);
+
+  const uploadProps = {
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    onChange({ file, fileList }) {
+      if (file.status !== 'uploading') {
+        console.log(file, fileList);
+      }
+    },
+    defaultFileList: [
+      {
+        uid: '1',
+        name: 'xxx.png',
+        status: 'done',
+        response: 'Server Error 500', // custom error message to show
+        url: 'http://www.baidu.com/xxx.png',
+      },
+      {
+        uid: '2',
+        name: 'yyy.png',
+        status: 'done',
+        url: 'http://www.baidu.com/yyy.png',
+      },
+      {
+        uid: '3',
+        name: 'zzz.png',
+        status: 'error',
+        response: 'Server Error 500', // custom error message to show
+        url: 'http://www.baidu.com/zzz.png',
+      },
+    ],
+  };
+
+  const onChangeTreeSelect = value => {
+    setTreeSelectValue(value);
+  };
+
+  const handleDisabledChange = disabled => {
+    setDisabled(disabled);
+  };
 
   const onCollapse = collapsed => {
     setCollapsed(collapsed);
@@ -266,6 +320,35 @@ export default () => {
     setSize(e.target.value);
   };
 
+  const filterOption = (inputValue, option) => option.description.indexOf(inputValue) > -1;
+
+  const handleChange = targetKeys => {
+    setTargetKeys(targetKeys);
+  };
+
+  const handleSearch = (dir, value) => {
+    console.log('search:', dir, value);
+  };
+
+  React.useEffect(() => {
+    const targetKeysArr = [];
+    const mockData = [];
+    for (let i = 0; i < 20; i++) {
+      const data = {
+        key: i.toString(),
+        title: `content${i + 1}`,
+        description: `description of content${i + 1}`,
+        chosen: Math.random() * 2 > 1,
+      };
+      if (data.chosen) {
+        targetKeysArr.push(data.key);
+      }
+      mockData.push(data);
+    }
+    setTargetKeys(targetKeysArr);
+    setMockData(mockData);
+  }, []);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
@@ -320,6 +403,27 @@ export default () => {
           <Button type="primary" onClick={showDrawer}>
             <Plus /> New account
           </Button>
+          <TimePicker />
+          <Upload {...uploadProps}>
+            <Button>
+              <IconUpload /> Upload
+            </Button>
+          </Upload>
+          <Rate
+            allowHalf
+            tooltips={['terrible', 'bad', 'normal', 'good', 'wonderful']}
+            defaultValue={2.5}
+          />
+          <div>
+            <Slider defaultValue={30} disabled={disabled} />
+            <Slider range defaultValue={[20, 50]} disabled={disabled} />
+            Disabled: <Switch size="small" checked={disabled} onChange={handleDisabledChange} />
+          </div>
+          <Switch disabled checkedChildren="开" unCheckedChildren="关" defaultChecked />
+          <br />
+          <Switch checkedChildren="1" unCheckedChildren="0" />
+          <br />
+          <Switch checkedChildren={<Check />} unCheckedChildren={<Close />} defaultChecked />
           <div>
             <Radio.Group value={size} onChange={handleSizeChange}>
               <Radio.Button value="large">Large</Radio.Button>
@@ -336,6 +440,48 @@ export default () => {
             <br />
             <WeekPicker size={size} placeholder="Select Week" />
           </div>
+          <DatePicker disabled />
+          <br />
+          <TreeSelect
+            showSearch
+            style={{ width: '100%' }}
+            value={treeSelectValue}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            placeholder="Please select"
+            allowClear
+            treeDefaultExpandAll
+            onChange={onChangeTreeSelect}
+          >
+            <TreeNode value="parent 1" title="parent 1" key="0-1">
+              <TreeNode value="parent 1-0" title="parent 1-0" key="0-1-1">
+                <TreeNode value="leaf1" title="my leaf" key="random" />
+                <TreeNode value="leaf2" title="your leaf" key="random1" />
+              </TreeNode>
+              <TreeNode value="parent 1-1" title="parent 1-1" key="random2">
+                <TreeNode value="sss" title={<b style={{ color: '#08c' }}>sss</b>} key="random3" />
+              </TreeNode>
+            </TreeNode>
+          </TreeSelect>
+          <br />
+          <Transfer
+            dataSource={mockData}
+            showSearch
+            disabled
+            filterOption={filterOption}
+            targetKeys={targetKeys}
+            onChange={handleChange}
+            onSearch={handleSearch}
+            render={item => item.title}
+          />
+          <br />
+          <Select defaultValue="lucy" style={{ width: 120 }}>
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+            <Option value="disabled" disabled>
+              Disabled
+            </Option>
+            <Option value="Yiminghe">yiminghe</Option>
+          </Select>
           <div>
             <Button type="primary" onClick={showModal}>
               Open Modal
